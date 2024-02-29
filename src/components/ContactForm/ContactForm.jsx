@@ -1,7 +1,14 @@
+// ContactForm.jsx
 import React, { useState } from 'react';
-import s from './ContactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact, selectContacts } from '../redux/contactsSlice';
+import { filterContacts } from '../redux/filterSlice';
+import styles from './ContactForm.module.css'; // Змінено імпорт для стилів
 
-const ContactForm = ({ onSubmit }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -12,8 +19,17 @@ const ContactForm = ({ onSubmit }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(name, number);
-    resetForm();
+
+    // Перевірка наявності контакта з таким ім'ям
+    const existingContact = contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase());
+
+    if (existingContact) {
+      alert('Contact with this name already exists!');
+    } else {
+      dispatch(addContact({ name, number }));
+      dispatch(filterContacts(''));
+      resetForm();
+    }
   };
 
   const resetForm = () => {
@@ -22,34 +38,18 @@ const ContactForm = ({ onSubmit }) => {
   };
 
   return (
-    <form className={s.form} onSubmit={handleSubmit}>
-      <label>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <label className={styles.input}>
         Name
-        <input
-          className={s.input}
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleChange}
-          required
-        />
+        <input type="text" name="name" value={name} onChange={handleChange} required />
       </label>
 
-      <label>
+      <label className={styles.input}>
         Number
-        <input
-          className={s.input}
-          type="tel"
-          name="number"
-          value={number}
-          onChange={handleChange}
-          required
-        />
+        <input type="tel" name="number" value={number} onChange={handleChange} required />
       </label>
 
-      <button className={s.button} type="submit">
-        Add contact
-      </button>
+      <button className={styles.button} type="submit">Add contact</button>
     </form>
   );
 };

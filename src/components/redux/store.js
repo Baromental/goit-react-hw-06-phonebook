@@ -8,6 +8,7 @@ import filterReducer from './filterSlice';
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['contacts'], // Вказати, що не потрібно зберігати дані для 'contacts'
 };
 
 const persistedReducer = persistReducer(persistConfig, contactsReducer);

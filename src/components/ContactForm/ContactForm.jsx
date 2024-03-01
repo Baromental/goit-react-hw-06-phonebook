@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact, selectContacts } from '../redux/contactsSlice';
 import { filterContacts } from '../redux/filterSlice';
-import styles from './ContactForm.module.css'; // Змінено імпорт для стилів
+import styles from './ContactForm.module.css';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,6 @@ const ContactForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Перевірка наявності контакта з таким ім'ям
     const existingContact = contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase());
 
     if (existingContact) {

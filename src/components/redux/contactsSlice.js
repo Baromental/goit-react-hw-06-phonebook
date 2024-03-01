@@ -9,12 +9,12 @@ const contactsSlice = createSlice({
       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+   ],
     filter: '',
   },
   reducers: {
     addContact: {
-      reducer(state, action) {
+     reducer(state, action) {
         state.contacts.push(action.payload);
       },
       prepare(contact) {
@@ -42,3 +42,4 @@ export const { addContact, deleteContact, setFilter, setContacts } = contactsSli
 export const selectContacts = state => state.contacts.contacts;
 
 export default contactsSlice.reducer;
+
